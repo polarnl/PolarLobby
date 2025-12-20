@@ -8,8 +8,6 @@ import org.polarnl.polarLobby.PolarLobby
 import java.util.UUID
 
 class AllowBlockBreak(private val plugin: PolarLobby) : Listener {
-    // Players listed here are allowed to bypass the lobby build protection.
-    // Shared instance is created in PolarLobby and used by the allowbreak command.
     val allowedPlayers: MutableSet<UUID> = mutableSetOf()
 
     fun register() {

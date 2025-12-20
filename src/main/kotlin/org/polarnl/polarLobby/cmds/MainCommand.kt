@@ -11,12 +11,14 @@ import org.polarnl.polarLobby.util.PlayerMessage
 class MainCommand(private val plugin: PolarLobby) : CommandExecutor, TabCompleter {
     private val subcommands: List<SubCommand> = listOf(
         Reload(plugin),
-        AllowBreakCommand(plugin)
+        AllowBreakCommand(plugin),
+        SetSpawn(plugin)
     )
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (args.isEmpty()) {
             if (sender is Player) {
+                if (!sender.hasPermission("polarlobby.admin")) PlayerMessage().send("Powered by PolarLobby. You do not have access to any commands from PolarLobby.", sender)
                 PlayerMessage().send("Available subcommands:", sender)
                 subcommands
                     .filter {

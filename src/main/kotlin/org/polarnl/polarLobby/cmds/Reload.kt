@@ -22,7 +22,7 @@ class Reload(private val plugin: PolarLobby) : SubCommand {
         return true
     }
     override fun tabComplete(sender: CommandSender, args: Array<out String>): List<String> {
-        // No autocompletion(s) for this command needed, so we return an empty list
+        // No autocompletion(s) for this command exist, so we return an empty list
         return emptyList()
     }
 }

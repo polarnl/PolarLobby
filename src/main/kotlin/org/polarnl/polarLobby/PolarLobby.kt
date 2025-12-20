@@ -1,11 +1,9 @@
 package org.polarnl.polarLobby
 
-import io.papermc.paper.plugin.bootstrap.BootstrapContext
-import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import org.bukkit.plugin.java.JavaPlugin
 import org.polarnl.polarLobby.cmds.MainCommand
 import org.polarnl.polarLobby.util.AllowBlockBreak
-import org.polarnl.polarLobby.util.Protocollib
+import org.polarnl.polarLobby.util.InterceptSpawn
 import org.polarnl.polarLobby.util.ServerConsole
 
 class PolarLobby : JavaPlugin() {
@@ -16,7 +14,9 @@ class PolarLobby : JavaPlugin() {
         saveDefaultConfig()
         reloadConfig()
 
-        // Shared instance so commands and listeners operate on the same state.
+        InterceptSpawn(this).register()
+
+        // Shared instance so commands and listeners operate in the same state.
         allowBlockBreak = AllowBlockBreak(this)
 
         val allowBreak = config.getBoolean("allowBreak", true)
@@ -27,7 +27,10 @@ class PolarLobby : JavaPlugin() {
         val mainCommand = MainCommand(this)
         val cmd = getCommand("pl")
         if (cmd == null) {
-            ServerConsole.error("Command 'pl' is missing from plugin.yml; commands will not work.")
+            ServerConsole.error("FATAL: pl command does not exist, shutting down plugin!")
+            ServerConsole.error("You have a faulty build of PolarLobby!")
+            ServerConsole.error("Please try reinstalling the plugin. If you built PolarLobby yourself, create an issue on GitHub: https://github.com/PolarNL/PolarLobby/issues.")
+            server.pluginManager.disablePlugin(this)
         } else {
             cmd.setExecutor(mainCommand)
             cmd.tabCompleter = mainCommand

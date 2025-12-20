@@ -1,4 +1,8 @@
 allowBreak: false
-playerSpawnCoords: ""
-playerJoinMessage: "<green>+ <#e0f2fe>{{PLAYER}}"
-playerLeaveMessage: "<red>- <#e0f2fe>{{PLAYER}}"
+
+# Do not set me manually! Use /pl setspawn to set this.
+spawn_coordinates: ""
+
+messages:
+  playerJoinMessage: "<green>+ <#e0f2fe>{{PLAYER}}"
+  playerLeaveMessage: "<red>- <#e0f2fe>{{PLAYER}}"
