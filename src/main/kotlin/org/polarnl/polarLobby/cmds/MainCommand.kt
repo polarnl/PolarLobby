@@ -10,37 +10,48 @@ import org.polarnl.polarLobby.util.PlayerMessage
 
 class MainCommand(private val plugin: PolarLobby) : CommandExecutor, TabCompleter {
     private val subcommands: List<SubCommand> = listOf(
-        Reload(plugin)
+        Reload(plugin),
+        AllowBreakCommand(plugin)
     )
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (args.isEmpty()) {
-            PlayerMessage().send("Available subcommands:", sender as Player)
-            subcommands
-                .filter {
-                    val perm = it.permission
-                    perm == null || sender.hasPermission(perm)
-                }
-                .forEach {
-                    PlayerMessage().send(
-                        "<green><click:suggest_command:\"/pl ${it.name}\">/pl ${it.name}</click> | ${it.description}", sender
-                    )
-                }
+            if (sender is Player) {
+                PlayerMessage().send("Available subcommands:", sender)
+                subcommands
+                    .filter {
+                        val perm = it.permission
+                        perm == null || sender.hasPermission(perm)
+                    }
+                    .forEach {
+                        PlayerMessage().send(
+                            "<green><click:suggest_command:\"/pl ${it.name}\">/pl ${it.name}</click> | ${it.description}", sender
+                        )
+                    }
+            } else {
+                sender.sendMessage("Available subcommands: " + subcommands.joinToString(", ") { it.name })
+            }
             return true
         }
 
         val key = args[0].lowercase()
         val sub = subcommands.firstOrNull { it.name.equals(key, ignoreCase = true) }
         if (sub == null) {
-            sender.sendMessage(
-                "<red>Unknown subcommand. See <blue><u><click:suggest_command:\"/pl\">/pl</click></u></blue for available subcommands."
-            )
+            if (sender is Player) {
+                PlayerMessage().send("<red>Unknown subcommand. See <blue><u><click:suggest_command:\"/pl\">/pl</click></u></blue for available subcommands.", sender)
+            } else {
+                sender.sendMessage("Unknown subcommand. Use /pl for available subcommands.")
+            }
             return true
         }
 
         val perm = sub.permission
         if (perm != null && !sender.hasPermission(perm)) {
-            PlayerMessage().send("<red>You do not have permission to use this command.", sender as Player)
+            if (sender is Player) {
+                PlayerMessage().send("<red>You do not have permission to use this command.", sender)
+            } else {
+                sender.sendMessage("You do not have permission to use this command.")
+            }
             return true
         }
 
@@ -61,6 +72,9 @@ class MainCommand(private val plugin: PolarLobby) : CommandExecutor, TabComplete
                 .toMutableList()
         }
 
-        return mutableListOf()
+        val sub = subcommands.firstOrNull { it.name.equals(args[0], ignoreCase = true) }
+            ?: return mutableListOf()
+        val subArgs = args.copyOfRange(1, args.size)
+        return sub.tabComplete(sender, subArgs).toMutableList()
     }
 }

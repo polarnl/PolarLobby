@@ -16,7 +16,7 @@ object ServerConsole {
     fun error(message: String) {
         val miniMessage = MiniMessage.miniMessage()
         val component = miniMessage.deserialize(
-            "[<#38bdf8>Polar<#e0f2fe>Lobby<white> | <red>ERROR<red>]: $message"
+            "[<#38bdf8>Polar<#e0f2fe>Lobby<white> | <red>ERROR</red>]: $message"
         )
         Bukkit
             .getConsoleSender()
