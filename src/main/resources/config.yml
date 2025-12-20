@@ -1,0 +1,4 @@
+allowBreak: false
+playerSpawnCoords: ""
+playerJoinMessage: "<green>+ <#e0f2fe>{{PLAYER}}"
+playerLeaveMessage: "<red>- <#e0f2fe>{{PLAYER}}"

@@ -1,0 +1,13 @@
+name: PolarLobby
+version: 1.0.0
+main: org.polarnl.polarLobby.PolarLobby
+author: PolarMC Technologies
+api-version: '1.21.11'
+depend:
+  - ProtocolLib
+
+commands:
+  pl:
+    description: Utilize the plugin
+    usage: /pl <subcommand>
+    aliases: [polarlobby]
