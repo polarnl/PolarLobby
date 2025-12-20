@@ -5,6 +5,7 @@ import org.polarnl.polarLobby.cmds.MainCommand
 import org.polarnl.polarLobby.util.AllowBlockBreak
 import org.polarnl.polarLobby.util.InterceptSpawn
 import org.polarnl.polarLobby.util.ServerConsole
+import org.polarnl.polarLobby.util.VoidTP
 
 class PolarLobby : JavaPlugin() {
     lateinit var allowBlockBreak: AllowBlockBreak
@@ -24,12 +25,14 @@ class PolarLobby : JavaPlugin() {
             allowBlockBreak.register()
         }
 
+        VoidTP(this).register()
+
         val mainCommand = MainCommand(this)
         val cmd = getCommand("pl")
         if (cmd == null) {
             ServerConsole.error("FATAL: pl command does not exist, shutting down plugin!")
             ServerConsole.error("You have a faulty build of PolarLobby!")
-            ServerConsole.error("Please try reinstalling the plugin. If you built PolarLobby yourself, create an issue on GitHub: https://github.com/PolarNL/PolarLobby/issues.")
+            ServerConsole.error("Please try reinstalling the plugin. If you built PolarLobby yourself, create an issue on GitHub: https://github.com/PolarNL/PolarLobby/issues .")
             server.pluginManager.disablePlugin(this)
         } else {
             cmd.setExecutor(mainCommand)

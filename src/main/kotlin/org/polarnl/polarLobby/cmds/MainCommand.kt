@@ -12,7 +12,8 @@ class MainCommand(private val plugin: PolarLobby) : CommandExecutor, TabComplete
     private val subcommands: List<SubCommand> = listOf(
         Reload(plugin),
         AllowBreakCommand(plugin),
-        SetSpawn(plugin)
+        SetSpawn(plugin),
+        VoidTP(plugin)
     )
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
@@ -27,7 +28,7 @@ class MainCommand(private val plugin: PolarLobby) : CommandExecutor, TabComplete
                     }
                     .forEach {
                         PlayerMessage().send(
-                            "<green><click:suggest_command:\"/pl ${it.name}\">/pl ${it.name}</click> | ${it.description}", sender
+                            "<blue><u><click:suggest_command:\"/pl ${it.name}\">/pl ${it.name}</click></u><green> | ${it.description}", sender
                         )
                     }
             } else {

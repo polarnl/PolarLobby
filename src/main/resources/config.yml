@@ -2,6 +2,7 @@ allowBreak: false
 
 # Do not set me manually! Use /pl setspawn to set this.
 spawn_coordinates: ""
+voidtp_y: ""
 
 messages:
   playerJoinMessage: "<green>+ <#e0f2fe>{{PLAYER}}"
