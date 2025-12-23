@@ -19,6 +19,7 @@ class InterceptSpawn(private val plugin: PolarLobby): Listener {
 
         if (spawnCoordsFromConfig != null) {
             player.teleport(spawnCoordsFromConfig)
+            player.gameMode = org.bukkit.GameMode.SURVIVAL
         } else {
             if (player.hasPermission("polarlobby.admin")) {
                 PlayerMessage().send("<yellow><bold>Spawn coordinates are not set! Please set them using /setspawn", player)

@@ -4,6 +4,8 @@ allowBreak: false
 spawn_coordinates: ""
 voidtp_y: ""
 
+antidamage: true
+
 messages:
   playerJoinMessage: "<green>+ <#e0f2fe>{{PLAYER}}"
   playerLeaveMessage: "<red>- <#e0f2fe>{{PLAYER}}"

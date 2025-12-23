@@ -3,6 +3,7 @@ package org.polarnl.polarLobby
 import org.bukkit.plugin.java.JavaPlugin
 import org.polarnl.polarLobby.cmds.MainCommand
 import org.polarnl.polarLobby.util.AllowBlockBreak
+import org.polarnl.polarLobby.util.AntiDamage
 import org.polarnl.polarLobby.util.InterceptSpawn
 import org.polarnl.polarLobby.util.ServerConsole
 import org.polarnl.polarLobby.util.VoidTP
@@ -16,6 +17,10 @@ class PolarLobby : JavaPlugin() {
         reloadConfig()
 
         InterceptSpawn(this).register()
+
+        if (config.getBoolean("antidamage", true)) {
+            AntiDamage(this).register()
+        }
 
         // Shared instance so commands and listeners operate in the same state.
         allowBlockBreak = AllowBlockBreak(this)
