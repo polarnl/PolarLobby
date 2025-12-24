@@ -10,13 +10,26 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.polarnl.polarLobby.PolarLobby
 import java.util.UUID
 
+/**
+ * AllowBlockBreak - Blok bescherming systeem
+ * 
+ * Deze klasse voorkomt dat spelers blokken plaatsen, breken of interacteren
+ * met bepaalde objecten in de lobby, tenzij ze expliciet toestemming hebben gekregen.
+ * 
+ * Toestemming wordt beheerd via een lijst van UUID's van toegestane spelers.
+ * Admins kunnen toestemming geven via het /pl allowbreak commando.
+ */
 class AllowBlockBreak(private val plugin: PolarLobby) : Listener {
+    // Set van speler UUID's die toestemming hebben om blokken te plaatsen/breken
     val allowedPlayers: MutableSet<UUID> = mutableSetOf()
 
     fun register() {
         plugin.server.pluginManager.registerEvents(this, plugin)
     }
 
+    /**
+     * Voorkomt dat spelers blokken breken, tenzij ze in de toegestane lijst staan.
+     */
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {
         if (allowedPlayers.contains(event.player.uniqueId)) {
@@ -26,6 +39,9 @@ class AllowBlockBreak(private val plugin: PolarLobby) : Listener {
         PlayerMessage().send("<red><bold>You cannot break blocks in this server", event.player)
     }
 
+    /**
+     * Voorkomt dat spelers blokken plaatsen, tenzij ze in de toegestane lijst staan.
+     */
     @EventHandler
     fun onBlockPlace(event: BlockPlaceEvent) {
         if (allowedPlayers.contains(event.player.uniqueId)) {
@@ -35,6 +51,10 @@ class AllowBlockBreak(private val plugin: PolarLobby) : Listener {
         PlayerMessage().send("<red><bold>You cannot place blocks in this server", event.player)
     }
 
+    /**
+     * Voorkomt interactie met bepaalde blokken zoals kisten, deuren, knoppen, etc.
+     * Dit beschermt tegen ongewenste veranderingen of toegang tot opslag.
+     */
     @EventHandler
     fun onPlayerInteract(event: PlayerInteractEvent) {
         if (event.action != Action.RIGHT_CLICK_BLOCK) return
@@ -42,10 +62,12 @@ class AllowBlockBreak(private val plugin: PolarLobby) : Listener {
         val block = event.clickedBlock ?: return
         val player = event.player
 
+        // Toegestane spelers mogen overal mee interacteren
         if (allowedPlayers.contains(player.uniqueId)) {
             return
         }
 
+        // Lijst van blokken waarmee spelers niet mogen interacteren
         val blockedBlocks = setOf(
             Material.CHEST, Material.TRAPPED_CHEST, Material.ENDER_CHEST,
             Material.BARREL, Material.FURNACE, Material.BLAST_FURNACE,
