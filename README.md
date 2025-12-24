@@ -3,7 +3,7 @@
 Welkom! Dit is de officiële Minecraft server van PolarNL, veel plezier!
 
 ## IP
-```mc.polarnl.org```
+`mc.polarnl.org`
 
 ## Handige links
 - [Problemen](https://github.com/polarnl/PolarLobby/issues)
