@@ -20,7 +20,7 @@ class InterceptSpawn(private val plugin: PolarLobby): Listener {
     }
 
     /**
-     * Wordt aangeroepen wanneer een speler de server joint.
+     * Wordt aangeroepen wanneer een speler de server betreedt.
      * Teleporteert de speler naar de ingestelde spawn locatie.
      */
     @EventHandler(priority = org.bukkit.event.EventPriority.LOWEST)
